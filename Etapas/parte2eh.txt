@@ -1,0 +1,51 @@
+cadastro de aviamentos:
+nome aviamento
+medida
+unidade{
+	unitaria,metros,kilos	
+}  
+valor
+
+
+cadastro produto 
+tecido{
+	tipo 1
+	tipo 2
+}
+
+corte{
+	
+}
+
+estamparia{
+	serigrafia
+	sublimação
+}
+
+costura{
+	
+}
+
+aviamento{
+	
+}
+
+etiqueta{
+	composicao
+	detalhe
+	tag	
+}
+
+arte{
+
+}
+
+tercerizado{
+	
+}
+
+pedido
+ordem de servico
+quantidade 
+ordem de corte
+

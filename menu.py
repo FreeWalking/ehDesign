@@ -32,12 +32,12 @@ class menu(object):
         self.statusbar.setObjectName("statusbar")
 
         MainWindow.setStatusBar(self.statusbar)
-        
+
         self.actionCliente = QtWidgets.QAction(MainWindow)
         self.actionCliente.setObjectName("actionCliente")
         self.actionCliente.setShortcut("Ctrl+C")
 
-        self.actionCliente.triggered.connect(self.form_cadastro)
+        self.actionCliente.triggered.connect(self.cadastro_lista)
 
         self.actionProtudos = QtWidgets.QAction(MainWindow)
         self.actionProtudos.setObjectName("actionProtudos")
@@ -56,7 +56,7 @@ class menu(object):
 
         self.menuCadastro.addAction(self.actionCliente)
 
-        self.menuCadastro.addAction(self.actionProtudos) 
+        self.menuCadastro.addAction(self.actionProtudos)
         self.menuCadastro.addAction(self.actionAviamentos)
         self.menuEstoque.addAction(self.actionSitua_ao)
         self.menubar.addAction(self.menuCadastro.menuAction())
@@ -85,8 +85,58 @@ class menu(object):
         self.lineEdit_id_cliente.clear()
         self.textEdit.clear()
 
+
+    def cadastro_lista(self, MainWindow):
+        self.dialog_lista_cliente = QtWidgets.QDialog()
+        self.dialog_lista_cliente.setObjectName("Lista_clientes")
+        self.dialog_lista_cliente.setWindowTitle("Lista clientes")
+        self.dialog_lista_cliente.resize(640, 480)
+
+        self.pesquisa_entrada = QtWidgets.QLineEdit(self.dialog_lista_cliente)
+        self.pesquisa_entrada.setGeometry(QtCore.QRect(30, 40, 441, 31))
+        self.pesquisa_entrada.setObjectName("pesquisa_entrada")
+
+
+        self.pushButton_pesquisar = QtWidgets.QPushButton(self.dialog_lista_cliente)
+        self.pushButton_pesquisar.setGeometry(QtCore.QRect(500, 40, 115, 32))
+        self.pushButton_pesquisar.setObjectName("pushButton_pesquisar")
+        self.pushButton_pesquisar.setText("Pesquisar")
+
+        self.listWidget_clientes = QtWidgets.QListWidget(self.dialog_lista_cliente)
+        self.listWidget_clientes.setGeometry(QtCore.QRect(30, 141, 441, 221))
+        self.listWidget_clientes.setObjectName("listWidget_clientes")
+
+        self.listagem = self.cursor.execute("SELECT nome FROM clientes").fetchall()
+
+        for i in self.listagem:
+            print (i)
+            self.listWidget_clientes.addItem("%s" % (i))
+
+
+        self.pushButton_adicionar = QtWidgets.QPushButton(self.dialog_lista_cliente)
+        self.pushButton_adicionar.setGeometry(QtCore.QRect(200, 380, 115, 32))
+        self.pushButton_adicionar.setObjectName("pushButton_adicionar")
+        self.pushButton_adicionar.setText("Novo Cliente")
+        self.pushButton_adicionar.clicked.connect(self.form_cadastro)
+
+
+        self.pushButton_alterar = QtWidgets.QPushButton(self.dialog_lista_cliente)
+        self.pushButton_alterar.setGeometry(QtCore.QRect(500, 190, 115, 32))
+        self.pushButton_alterar.setObjectName("pushButton_alterar")
+        self.pushButton_alterar.setText("Alterar")
+        self.pushButton_alterar.clicked.connect(self.pesquisando_cliente)
+
+        self.pushButton_excluir = QtWidgets.QPushButton(self.dialog_lista_cliente)
+        self.pushButton_excluir.setGeometry(QtCore.QRect(500, 270, 115, 32))
+        self.pushButton_excluir.setObjectName("pushButton_excluir")
+        self.pushButton_excluir.setText("Excluir")
+        self.pushButton_excluir.clicked.connect(self.excluir)
+
+        self.dialog_lista_cliente.show()
+
+
     def form_cadastro(self, MainWindow):
-        
+
         self.dialog = QtWidgets.QDialog()
         self.dialog.setObjectName("Dialog")
         self.dialog.setWindowTitle('Cadastro de cliente')
@@ -121,7 +171,7 @@ class menu(object):
         self.lineEdit_2.setGeometry(QtCore.QRect(420, 100, 113, 21))
         self.lineEdit_2.setObjectName("lineEdit_cpf")
 
-        # caixa de escolha 
+        # caixa de escolha
         self.comboBox = QtWidgets.QComboBox(self.dialog)
         self.comboBox.setGeometry(QtCore.QRect(560, 100, 131, 21))
         self.comboBox.setObjectName("comboBox")
@@ -162,7 +212,7 @@ class menu(object):
         self.lineEdit_5 = QtWidgets.QLineEdit(self.dialog)
         self.lineEdit_5.setGeometry(QtCore.QRect(420, 200, 121, 21))
         self.lineEdit_5.setObjectName("lineEdit_complemento")
-        
+
 
         # label do telefone
         self.label_7 = QtWidgets.QLabel(self.dialog)
@@ -175,7 +225,7 @@ class menu(object):
         self.lineEdit_6 = QtWidgets.QLineEdit(self.dialog)
         self.lineEdit_6.setGeometry(QtCore.QRect(420, 150, 141, 21))
         self.lineEdit_6.setObjectName("lineEdit_telefone")
-        
+
         # label do bairro
         self.label_8 = QtWidgets.QLabel(self.dialog)
         self.label_8.setGeometry(QtCore.QRect(570, 180, 59, 16))
@@ -186,31 +236,31 @@ class menu(object):
         self.lineEdit_7 = QtWidgets.QLineEdit(self.dialog)
         self.lineEdit_7.setGeometry(QtCore.QRect(570, 200, 171, 21))
         self.lineEdit_7.setObjectName("lineEdit_bairro")
-        
-        # linha de divisao 
+
+        '''# linha de divisao
         self.line_2 = QtWidgets.QFrame(self.dialog)
         self.line_2.setGeometry(QtCore.QRect(-10, 60, 851, 16))
         self.line_2.setLineWidth(4)
         self.line_2.setFrameShape(QtWidgets.QFrame.HLine)
         self.line_2.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.line_2.setObjectName("line_2")
+        self.line_2.setObjectName("line_2")'''
 
 
         # botao de pesquisa
-        self.pushButton = QtWidgets.QPushButton(self.dialog)
+        '''self.pushButton = QtWidgets.QPushButton(self.dialog)
         self.pushButton.setGeometry(QtCore.QRect(650, 20, 115, 32))
         self.pushButton.setObjectName("Pesquisa")
         self.pushButton.setText('Pesquisar')
-        self.pushButton.clicked.connect(self.pesquisando_cliente)
-        
+        self.pushButton.clicked.connect(self.pesquisando_cliente)'''
+
 
 
         # entrada da pesquisa
-        self.lineEdit_8 = QtWidgets.QLineEdit(self.dialog)
+        '''self.lineEdit_8 = QtWidgets.QLineEdit(self.dialog)
         self.lineEdit_8.setGeometry(QtCore.QRect(52, 20, 571, 31))
-        self.lineEdit_8.setObjectName("lineEdit_pesquisa")
+        self.lineEdit_8.setObjectName("lineEdit_pesquisa")'''
 
-        # label da cidade 
+        # label da cidade
         self.label_9 = QtWidgets.QLabel(self.dialog)
         self.label_9.setGeometry(QtCore.QRect(20, 230, 59, 16))
         self.label_9.setObjectName("label_cidade")
@@ -304,7 +354,7 @@ class menu(object):
 
 
 
-    
+
         print("chamando")
 
     def adicionar(self):
@@ -322,7 +372,7 @@ class menu(object):
         self.contato_cliente = self.lineEdit_12.text()
         self.comentarios_cliente = self.textEdit.toPlainText()
 
-        
+
         self.dados_clientes = [[self.nome_cliente, self.cpf_cnpj_cliente, self.tipo_cliente, self.telefone_cliente,  self.endereco_cliente, self.complemento_cliente, self.bairro_cliente, self.cidade_cliente, self.estado_cliente, self.cep_cliente, self.contato_cliente,self.comentarios_cliente ,self.email_cliente]]
 
         self.cursor.executemany("""INSERT INTO clientes (nome, cpf_cnpj, tipo, telefone, endereco, complemento, bairro, cidade, estado, cep, contato, comentarios, email) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)""", self.dados_clientes)
@@ -335,13 +385,18 @@ class menu(object):
 
         time.sleep(2)
         self.clear()
-               
+
 
     def alterar(self):
         print('alterado')
 
     def pesquisando_cliente(self):
-        self.valor = self.lineEdit_8.text()
+        self.form_cadastro(MainWindow)
+
+        #self.dialog.show()
+
+        self.valor = self.listWidget_clientes.currentItem().text()
+
         self.pesquisa = self.cursor.execute("SELECT nome from clientes WHERE nome='%s' " % (self.valor)).fetchone()
 
         if self.pesquisa != None:
@@ -396,22 +451,19 @@ class menu(object):
 
         #print ('pesquisando')
         #print (self.pesquisa)
-        
+
     def excluir(self):
-        
-        self.filtro_id = self.cursor.execute("""SELECT cliente_id FROM clientes WHERE nome='%s' """ % (self.valor)).fetchone()
+        self.selecionado = self.listWidget_clientes.currentItem().text()
+        print(self.selecionado)
+
+        self.filtro_id = self.cursor.execute("""SELECT cliente_id FROM clientes WHERE nome='%s' """ % (self.selecionado)).fetchone()
 
         self.cursor.execute("""DELETE from clientes WHERE cliente_id='%s' """ % (self.filtro_id))
 
-        print (self.filtro_id)
+        #print (self.filtro_id)
         self.conexao.commit()
-        print('Excluido')
-        self.clear()
-
-
-
-
-
+        #print('Excluido')
+        #self.clear()
 
 
 
@@ -428,8 +480,76 @@ class menu(object):
     def form_aviamentos(self, MainWindow):
         self.dialog_aviamentos = QtWidgets.QDialog()
         self.dialog_aviamentos.setObjectName("Dialog")
-        self.dialog_aviamentos.setWindowTitle('Cadastro de Aviamentos')
-        self.dialog_aviamentos.resize(832, 532)
+        self.dialog_aviamentos.setWindowTitle('Cadastro_de_Aviamentos')
+        self.dialog_aviamentos.resize(768, 427)
+
+        self.label_codigo = QtWidgets.QLabel(self.dialog_aviamentos)
+        self.label_codigo.setGeometry(QtCore.QRect(80, 30, 59, 16))
+        self.label_codigo.setObjectName("label_codigo")
+        self.label_codigo.setText('Codigo:')
+
+        self.lineEdit = QtWidgets.QLineEdit(self.dialog_aviamentos)
+        self.lineEdit.setGeometry(QtCore.QRect(80, 60, 113, 21))
+        self.lineEdit.setObjectName("lineEdit")
+
+        self.labe_aviamento = QtWidgets.QLabel(self.dialog_aviamentos)
+        self.labe_aviamento.setGeometry(QtCore.QRect(250, 30, 121, 16))
+        self.labe_aviamento.setObjectName("labe_aviamento")
+        self.labe_aviamento.setText("Nome Aviamento:")
+
+        self.lineEdit_2 = QtWidgets.QLineEdit(self.dialog_aviamentos)
+        self.lineEdit_2.setGeometry(QtCore.QRect(250, 60, 401, 21))
+        self.lineEdit_2.setObjectName("lineEdit_2")
+
+        self.label_fornecedor = QtWidgets.QLabel(self.dialog_aviamentos)
+        self.label_fornecedor.setGeometry(QtCore.QRect(80, 100, 81, 16))
+        self.label_fornecedor.setObjectName("label_fornecedor")
+        self.label_fornecedor.setText("Fornecedor:")
+
+        self.lineEdit_3 = QtWidgets.QLineEdit(self.dialog_aviamentos)
+        self.lineEdit_3.setGeometry(QtCore.QRect(80, 130, 571, 21))
+        self.lineEdit_3.setObjectName("lineEdit_3")
+
+        self.label_valor = QtWidgets.QLabel(self.dialog_aviamentos)
+        self.label_valor.setGeometry(QtCore.QRect(80, 170, 41, 16))
+        self.label_valor.setObjectName("label_valor")
+        self.label_valor.setText("Valor:")
+
+        self.lineEdit_4 = QtWidgets.QLineEdit(self.dialog_aviamentos)
+        self.lineEdit_4.setGeometry(QtCore.QRect(80, 190, 113, 21))
+        self.lineEdit_4.setObjectName("lineEdit_4")
+
+        self.label_unidade = QtWidgets.QLabel(self.dialog_aviamentos)
+        self.label_unidade.setGeometry(QtCore.QRect(530, 190, 61, 21))
+        self.label_unidade.setObjectName("label_unidade")
+        self.label_unidade.setText("Unidade:")
+
+        self.comboBox = QtWidgets.QComboBox(self.dialog_aviamentos)
+        self.comboBox.setGeometry(QtCore.QRect(600, 190, 121, 21))
+        self.comboBox.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
+        self.comboBox.setObjectName("comboBox")
+        self.comboBox.addItem("Unitaria")
+        self.comboBox.addItem("Metrica")
+
+        self.label_observacoes = QtWidgets.QLabel(self.dialog_aviamentos)
+        self.label_observacoes.setGeometry(QtCore.QRect(80, 230, 91, 16))
+        self.label_observacoes.setObjectName("label_observacoes")
+        self.label_observacoes.setText('Observações:')
+
+        self.Button_adicionar_fornecedor = QtWidgets.QPushButton(self.dialog_aviamentos)
+        self.Button_adicionar_fornecedor.setGeometry(QtCore.QRect(680, 130, 21, 21))
+        self.Button_adicionar_fornecedor.setObjectName("Button_adicionar_fornecedor")
+        self.Button_adicionar_fornecedor.setText("+")
+
+        self.textEdit = QtWidgets.QTextEdit(self.dialog_aviamentos)
+        self.textEdit.setGeometry(QtCore.QRect(80, 260, 381, 91))
+        self.textEdit.setObjectName("textEdit")
+
+        self.pushButton_salvar = QtWidgets.QPushButton(self.dialog_aviamentos)
+        self.pushButton_salvar.setGeometry(QtCore.QRect(590, 280, 115, 32))
+        self.pushButton_salvar.setObjectName("pushButton_salvar")
+        self.pushButton_salvar.setText("Salvar")
+
 
         self.dialog_aviamentos.show()
 
@@ -446,13 +566,13 @@ class menu(object):
         self.actionSitua_ao.setText(_translate("MainWindow", "Situaçao"))
         self.actionAviamentos.setText(_translate("MainWindow", "Aviamentos"))
 
-        
 
 
 
 
-    
-        
+
+
+
 
 if __name__ == "__main__":
     import sys
@@ -464,4 +584,3 @@ if __name__ == "__main__":
     ui.bd_conexao()
     MainWindow.show()
     sys.exit(app.exec_())
-
